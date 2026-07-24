@@ -1,0 +1,47 @@
+# Publishes sql-injections to npm using npm Trusted Publishing (OIDC).
+# No NPM_TOKEN is needed: GitHub authenticates to npm via OIDC.
+#
+# Requirements (already configured on npmjs.com):
+#   - Trusted publisher pointing to repo AndreyMartinez/sql-injection
+#     with workflow file name "publish.yml".
+#
+# How it runs: publishes whatever version is in package.json when a GitHub
+# Release is published. Bump the version first, e.g.:
+#   npm version patch && git push && git push --tags
+# then create a Release for that tag (or run this workflow manually).
+
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  id-token: write        # required for OIDC / trusted publishing
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Update npm (trusted publishing needs npm >= 11.5.1)
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Publish
+        run: npm publish
