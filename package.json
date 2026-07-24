@@ -1,24 +1,39 @@
 {
   "name": "sql-injections",
-  "version": "0.0.15",
-  "description": "project sql-injection in expresion regular",
+  "version": "1.0.0",
+  "description": "Detector de inyecciones y vulnerabilidades de texto (SQL, XSS, comandos, path traversal, NoSQL, LDAP, SSTI) sin dependencias y extensible / Zero-dependency, extensible text-injection & vulnerability scanner",
   "main": "sql-injections.js",
-  "keywords": "sql-injections.js",
-  "licenses": {
-    "type": "MIT",
-    "url": "https://www.opensource.org/licenses/mit-license.php"
+  "files": [
+    "sql-injections.js",
+    "lib/",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=18"
   },
+  "keywords": [
+    "sql-injection",
+    "security",
+    "xss",
+    "command-injection",
+    "path-traversal",
+    "nosql-injection",
+    "sanitize",
+    "validation",
+    "input-validation"
+  ],
+  "homepage": "https://github.com/AndreyMartinez/sql-injection#readme",
   "bugs": {
-    "url": "https://github.com/AndreyMartinez/sql-injection/issues",
-    "email": "project@hostname.com"
+    "url": "https://github.com/AndreyMartinez/sql-injection/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AndreyMartinez/sql-injection"
+    "url": "git+https://github.com/AndreyMartinez/sql-injection.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test",
+    "prepublishOnly": "npm test"
   },
-  "author": "dreamer98",
+  "author": "Raphael Martinez",
   "license": "MIT"
 }
