@@ -1,97 +1,111 @@
-# Guía de publicación en npm / Publishing guide
+# Publishing guide
 
-Pasos para publicar `sql-injections` en el registro de npm.
+Steps to publish `sql-injections` to the npm registry.
 
-## 1. Requisitos previos
+## 1. Prerequisites
 
-- Tener una cuenta en https://www.npmjs.com
-- Node.js >= 18 y npm instalados (`node -v`, `npm -v`)
-- Que el nombre `sql-injections` esté disponible o sea tuyo. Compruébalo:
+- An account at https://www.npmjs.com
+- Node.js >= 18 and npm installed (`node -v`, `npm -v`)
+- The name `sql-injections` must be available or owned by you. Check it:
 
   ```bash
   npm view sql-injections
   ```
 
-  - Si devuelve datos de un paquete que **no** es tuyo, el nombre está tomado:
-    cambia `name` en `package.json` (p. ej. a un scope propio
-    `@tu-usuario/sql-injections`).
-  - Si devuelve `404`, el nombre está libre.
+  - If it returns data for a package that is **not** yours, the name is taken:
+    change `name` in `package.json` (e.g. to a scoped name
+    `@your-user/sql-injections`).
+  - If it returns `404`, the name is free.
 
-## 2. Antes de publicar
+## 2. Before publishing
 
 ```bash
-# 1. Instala (no hay dependencias, pero valida el package.json)
+# 1. Install (no dependencies, but it validates package.json)
 npm install
 
-# 2. Corre las pruebas — también se ejecutan solas por "prepublishOnly"
+# 2. Run the tests — they also run automatically via "prepublishOnly"
 npm test
 
-# 3. Revisa EXACTAMENTE qué archivos se subirán
+# 3. Review EXACTLY which files will be uploaded
 npm pack --dry-run
 ```
 
-Deberían empaquetarse solo: `sql-injections.js`, `lib/`, `README.md`,
-`LICENSE`, `CHANGELOG.md` y `package.json` (controlado por el campo `files`).
+Only these should be packed: `sql-injections.js`, `lib/`, `README.md`,
+`LICENSE`, `CHANGELOG.md` and `package.json` (controlled by the `files` field).
 
-## 3. Versionado (SemVer)
+## 3. Versioning (SemVer)
 
-Usa `npm version` para subir la versión, crear el commit y el tag de git:
+Use `npm version` to bump the version and create the git commit and tag:
 
 ```bash
-npm version patch   # 1.0.0 -> 1.0.1  (arreglos)
-npm version minor   # 1.0.0 -> 1.1.0  (nuevas funciones compatibles)
-npm version major   # 1.0.0 -> 2.0.0  (cambios que rompen compatibilidad)
+npm version patch   # 1.0.0 -> 1.0.1  (fixes)
+npm version minor   # 1.0.0 -> 1.1.0  (new backward-compatible features)
+npm version major   # 1.0.0 -> 2.0.0  (breaking changes)
 ```
 
-La versión inicial ya está en `1.0.0`, así que para el primer publish
-puedes saltarte este paso.
+The initial version is already `1.0.0`, so you can skip this step for the first
+publish.
 
-## 4. Iniciar sesión y publicar
+## 4. Log in and publish
 
 ```bash
-# Inicia sesión (abre el navegador para 2FA si lo tienes activado)
+# Log in (opens the browser for 2FA if enabled)
 npm login
 
-# Verifica quién eres
+# Verify who you are
 npm whoami
 
-# Publicación
+# Publish
 npm publish
 ```
 
-> Si usas un nombre con scope (`@tu-usuario/sql-injections`) y quieres que sea
-> público, la primera vez añade:
+> If you use a scoped name (`@your-user/sql-injections`) and want it public, add
+> this the first time:
 > ```bash
 > npm publish --access public
 > ```
 
-## 5. Verificar
+### Publishing with a token (CI / no interactive login)
+
+If you use an access token instead of `npm login`, use an **Automation** or a
+**Granular** token with **read and write** permission (a read-only token causes
+a `403`). Configure it locally with:
+
+```bash
+npm config set //registry.npmjs.org/:_authToken=YOUR_TOKEN
+```
+
+Automation / granular write tokens bypass the interactive 2FA prompt.
+
+## 5. Verify
 
 ```bash
 npm view sql-injections
 ```
 
-Y prueba la instalación en una carpeta limpia:
+Then test the install in a clean folder:
 
 ```bash
-mkdir /tmp/prueba && cd /tmp/prueba && npm init -y
+mkdir /tmp/test && cd /tmp/test && npm init -y
 npm install sql-injections
 node -e "console.log(require('sql-injections').hasSql(\"' OR 1=1 --\"))"  # true
 ```
 
-## 6. Publicar cambios posteriores
+## 6. Publishing later updates
 
-1. Actualiza el código y añade una entrada en `CHANGELOG.md`.
+1. Update the code and add an entry to `CHANGELOG.md`.
 2. `npm test`
 3. `npm version patch|minor|major`
 4. `npm publish`
 5. `git push && git push --tags`
 
-## Notas
+## Notes
 
-- **2FA:** se recomienda activar la verificación en dos pasos en tu cuenta npm
+- **2FA:** enabling two-factor authentication on your npm account is recommended
   (`Account → Two-Factor Authentication`).
-- **Deshacer un publish:** solo puedes retirar (`npm unpublish`) dentro de las
-  primeras 72 horas y con condiciones. Publica con cuidado.
-- **Correo de contacto:** si quieres un email público para reportes, añádelo en
-  `package.json` bajo `bugs.email` o `author` (será visible en npm).
+- **Undoing a publish:** you can only `npm unpublish` within the first 72 hours
+  and under certain conditions. Publish carefully.
+- **Contact email:** if you want a public email for reports, add it in
+  `package.json` under `bugs.email` or `author` (it will be visible on npm).
+- **Never share your token** in chats, commits, or screenshots. If a token is
+  ever exposed, revoke it immediately from npmjs.com → Access Tokens.

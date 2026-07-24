@@ -1,44 +1,43 @@
 # Changelog
 
-Todos los cambios notables de este proyecto se documentan aquí.
 All notable changes to this project are documented here.
 
-El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
-y el proyecto usa [Versionado Semántico](https://semver.org/lang/es/).
+This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
+and [Semantic Versioning](https://semver.org/).
 
 ## [1.0.0] - 2026-07-24
 
-Reescritura completa de la librería / Full library rewrite.
+Full library rewrite.
 
 ### Added
-- Escáner multi-amenaza: `sql-injection`, `xss`, `command-injection`,
+- Multi-threat scanner: `sql-injection`, `xss`, `command-injection`,
   `path-traversal`, `nosql-injection`, `ldap-injection`, `template-injection`
-  (SSTI) y `crlf-injection`.
-- `scan(value)` devuelve el detalle `{ safe, value, threats[] }` con `type`,
-  `severity` y `match` por amenaza.
-- `isSafe(value)` como inverso de `hasSql`.
-- Sub-funciones / validadores personalizados: `addValidator`, `removeValidator`,
-  `listValidators` (aceptan RegExp, `{ pattern, patterns, severity, message }`
-  o una función `test`).
-- `createScanner(options)` con instancias aisladas y opciones `lang` (`es`/`en`),
-  `categories` y `minSeverity`.
-- Mensajes bilingües español / inglés.
-- Suite de pruebas con `node --test` (`npm test`).
-- Archivos `LICENSE`, `CHANGELOG.md` y campos de empaquetado (`files`, `engines`).
+  (SSTI) and `crlf-injection`.
+- `scan(value)` returns detail `{ safe, value, threats[] }` with `type`,
+  `severity` and `match` per threat.
+- `isSafe(value)` as the inverse of `hasSql`.
+- Custom sub-functions / validators: `addValidator`, `removeValidator`,
+  `listValidators` (accept a RegExp, `{ pattern, patterns, severity, message }`,
+  or a `test` function).
+- `createScanner(options)` with isolated instances and `lang` (`en`/`es`),
+  `categories` and `minSeverity` options.
+- Bilingual messages (English / Spanish), English by default.
+- Test suite with `node --test` (`npm test`).
+- `LICENSE`, `CHANGELOG.md` files and packaging fields (`files`, `engines`).
 
 ### Changed
-- La detección ahora busca **sintaxis de ataque** en lugar de palabras sueltas,
-  reduciendo drásticamente los falsos positivos (p. ej. `"hace join de datos"`
-  ya no se marca como peligroso).
-- `hasSql(value)` ahora cubre todas las categorías, no solo SQL.
+- Detection now matches **attack syntax** instead of bare words, drastically
+  reducing false positives (e.g. `"work where the teams join data"` is no longer
+  flagged as dangerous).
+- `hasSql(value)` now covers every category, not just SQL.
 
 ### Fixed
-- Variable global `re` sin declarar (fuga al scope global).
-- `null` / `undefined` ya no se reportan como amenaza (antes devolvían `true`).
+- Undeclared global variable `re` (leaked into the global scope).
+- `null` / `undefined` are no longer reported as a threat (previously returned
+  `true`).
 
-## [0.0.15] - anterior / previous
+## [0.0.15] - previous
 
-- Versión inicial con una única función `hasSql` basada en un regex de
-  palabras clave SQL.
+- Initial version with a single `hasSql` function based on a SQL keyword regex.
 
 [1.0.0]: https://github.com/AndreyMartinez/sql-injection/releases/tag/v1.0.0
