@@ -1,6 +1,6 @@
 {
   "name": "sql-injections",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Detector de inyecciones y vulnerabilidades de texto (SQL, XSS, comandos, path traversal, NoSQL, LDAP, SSTI) sin dependencias y extensible / Zero-dependency, extensible text-injection & vulnerability scanner",
   "main": "sql-injections.js",
   "files": [
