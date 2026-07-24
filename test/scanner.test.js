@@ -108,7 +108,7 @@ test('addValidator es encadenable', () => {
 test('addValidator rechaza configuración inválida', () => {
   const scanner = createScanner();
   assert.throws(() => scanner.addValidator('x', {}), /pattern|patterns|test/);
-  assert.throws(() => scanner.addValidator('', /x/), /nombre/);
+  assert.throws(() => scanner.addValidator('', /x/), /name/);
   assert.throws(() => scanner.addValidator('y', { pattern: /a/, severity: 'critico' }), /severity/);
 });
 
