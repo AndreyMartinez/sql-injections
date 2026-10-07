@@ -1,0 +1,44 @@
+{
+  "name": "text-injections",
+  "version": "1.0.0",
+  "description": "Catch injection attacks in text: a zero-dependency, extensible scanner for SQL injection, XSS, command injection, path traversal, NoSQL, LDAP, SSTI and CRLF",
+  "main": "sql-injections.js",
+  "files": [
+    "sql-injections.js",
+    "lib/",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "text-injections",
+    "sql-injection",
+    "injection",
+    "security",
+    "security-scanner",
+    "xss",
+    "command-injection",
+    "path-traversal",
+    "nosql-injection",
+    "ldap-injection",
+    "ssti",
+    "sanitize",
+    "input-validation",
+    "owasp"
+  ],
+  "homepage": "https://github.com/AndreyMartinez/sql-injections#readme",
+  "bugs": {
+    "url": "https://github.com/AndreyMartinez/sql-injections/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyMartinez/sql-injections.git"
+  },
+  "scripts": {
+    "test": "node --test",
+    "prepublishOnly": "npm test"
+  },
+  "author": "Raphael Martinez",
+  "license": "MIT"
+}
